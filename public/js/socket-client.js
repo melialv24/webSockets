@@ -37,5 +37,7 @@ btnEnviar.addEventListener('click', () => {
         fecha: new Date().getTime()
     }
     //De esta manera emitimos un evento a nuestro socket
-    socket.emit('enviar-mensaje', payload)
+    socket.emit('enviar-mensaje', payload, (id) => {
+        console.log('Desde el server', id);
+    })
 })
