@@ -1,44 +1,47 @@
 
-//Referencias del html
-const lblOnline = document.querySelector('#lblOnline');
+// Referencias del HTML
+const lblOnline  = document.querySelector('#lblOnline');
 const lblOffline = document.querySelector('#lblOffline');
 const txtMensaje = document.querySelector('#txtMensaje');
-const btnEnviar = document.querySelector('#btnEnviar');
+const btnEnviar  = document.querySelector('#btnEnviar');
 
-//Socket del cliente que esta usando la aplicacion web
-const socket = io()
 
-//Estos son los listeners o observables del lado del cliente
-// que estan a la escucha de los cambios del socket
+const socket = io();
 
-// el on es para estar escuchando un evento, hay eventos predeterminado 
-// en socket io como el connect y disconnect
+
+
 socket.on('connect', () => {
-    //console.log('conectado');
-    lblOffline.style.display =  'none'
-    lblOnline.style.display =  ''
-})
-// espera el evento de desconexion
+    // console.log('Conectado');
+
+    lblOffline.style.display = 'none';
+    lblOnline.style.display  = '';
+
+});
+
 socket.on('disconnect', () => {
-    //console.log('desconectado');
-    lblOnline.style.display =  'none'
-    lblOffline.style.display =  ''
-})
-// espera el evento de enviar-mensaje
+    // console.log('Desconectado del servidor');
+
+    lblOnline.style.display  = 'none';
+    lblOffline.style.display = '';
+});
+
+
 socket.on('enviar-mensaje', (payload) => {
-    console.log(payload);
+    console.log( payload )
 })
 
-btnEnviar.addEventListener('click', () => {
-    const mensaje = txtMensaje.value
+
+btnEnviar.addEventListener( 'click', () => {
+
+    const mensaje = txtMensaje.value;
     const payload = {
-        mensaje, 
-        id: 'jshdjsh890kmn',
+        mensaje,
+        id: '123ABC',
         fecha: new Date().getTime()
     }
-    //De esta manera emitimos un evento a nuestro socket
-    // Este callback se hace referencia en el la escucha del evento del back 
-    socket.emit('enviar-mensaje', payload, (id) => {
-        console.log('Desde el server', id);
-    })
-})
+    
+    socket.emit( 'enviar-mensaje', payload, ( id ) => {
+        console.log('Desde el server', id );
+    });
+
+});
